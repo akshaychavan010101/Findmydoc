@@ -1,7 +1,6 @@
 import styles from "./HomeMiddleComp.module.css";
 import doctorImage from "../../assets/medical-5459654__340.png";
 import doctorImage2 from "../../assets/doctor-6810750_960_720.png";
-
 import {
   Flex,
   Container,
@@ -67,8 +66,9 @@ export default function HomeMiddleComp() {
             colorScheme={"orange"}
             bg={"orange.400"}
             _hover={{ bg: "orange.500" }}
+            style={{display : sessionStorage.getItem("login") ? "none" : "block"}}
           >
-            <Link to="/user/login">Get started</Link>
+            <Link to="/user/login" >Get started</Link>
           </Button>
           <Button rounded={"full"} px={6}>
             <Link to="/services">Services</Link>

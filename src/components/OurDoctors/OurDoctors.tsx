@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 // import { json } from "react-router-dom";
 
 export default function OurTeam() {
-  const frontendUrl = "https://findmydoc.netlify.app";
   const [Cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,7 +55,7 @@ export default function OurTeam() {
               padding={4}
             >
               <Flex flex={1} bg="blue.200" onClick={() => {
-                window.location.href = `${frontendUrl}/doctordetails`
+                window.location.href = `/doctordetails`
               }}>
                 <Image objectFit="fill" boxSize="100%" src={items["avatar"]} onClick={() => {
                       sessionStorage.setItem(
@@ -149,7 +148,7 @@ export default function OurTeam() {
                     _focus={{
                       bg: "gray.200",
                     }}
-                    
+                    style={{display : sessionStorage.getItem("login") ? "block" : "none"}}
                   >
                     <Link to="/appointment">Book Appointment</Link>
                   </Button>
@@ -175,7 +174,7 @@ export default function OurTeam() {
                       );
                     }}
                   >
-                    <Link to={"/doctordetails"}>Follow</Link>
+                    <Link to="/doctordetails">Follow</Link>
                   </Button>
                 </Stack>
               </Stack>

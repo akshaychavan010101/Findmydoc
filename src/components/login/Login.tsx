@@ -21,17 +21,12 @@ import {
 } from "@chakra-ui/react";
 
 export default function Login() {
-  const frontendUrl = "https://findmydoc.netlify.app";
   const baseURL = "https://jittery-shirt-tuna.cyclic.app";
-  // const payload const [submitted, setSubmitted] = useState(false);
-  // const [email, setEmail] = useState("")
-  // const [pass, setPass] = useState("")
   const [login, setLogin] = useState(false);
 
-  if(login){
-    sessionStorage.setItem("login","true");
+  if (login) {
+    sessionStorage.setItem("login", "true");
   }
-  
 
   async function handleSignIn() {
     const email: string = (document.getElementById("email") as HTMLInputElement)
@@ -48,7 +43,6 @@ export default function Login() {
 
     try {
       const payload = { email, password };
-     
 
       let fData = await fetch(`${baseURL}/user/login`, {
         method: "POST",
@@ -65,15 +59,19 @@ export default function Login() {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("userName", data.userName);
         setLogin(true);
-        Swal.fire(data.msg);
-
         if (data.msg == "Login Successful") {
-          if (data.isAdmin == "admin") {
-            sessionStorage.setItem("isAdmin", "admin");
-            window.location.href = `${frontendUrl}/admin/dashboard`;
-          } else {
-            window.location.href = `${frontendUrl}`;
-          }
+          Swal.fire(data.msg).then(() => {
+            if (data.isAdmin == "admin") {
+              sessionStorage.setItem("isAdmin", "admin");
+              setTimeout(() => {
+                window.location.href = `/admin/dashboard`;
+              }, 1000);
+            } else {
+              setTimeout(() => {
+                window.location.href = `/`;
+              }, 1000);
+            }
+          });
         }
       } else {
         setLogin(false);
@@ -191,7 +189,6 @@ export default function Login() {
               <Text align={"center"}>
                 Don't have an account?{" "}
                 <Link to="/user/signup" color={"blue.400"}>
-                  {" "}
                   <u>Click Here</u>
                 </Link>
               </Text>

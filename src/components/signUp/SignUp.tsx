@@ -24,8 +24,6 @@ import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export default function SignupCard() {
-  // let baseUrl = "https://jittery-shirt-tuna.cyclic.app"
-  const frontendURl = "https://findmydoc.netlify.app";
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -62,7 +60,7 @@ export default function SignupCard() {
       console.log(data);
       if (data.msg == "User created") {
         Swal.fire("User Registered");
-        window.location.href =`${frontendURl}/user/login`
+        window.location.href =`/user/login`
       }
 
     } catch (error:any) {

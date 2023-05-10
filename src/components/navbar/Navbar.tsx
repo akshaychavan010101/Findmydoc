@@ -1,7 +1,7 @@
 import styles from "./Navbar.module.css";
 import logo from "../../assets/logo.png";
 import patientLogo from "../../assets/patientLogo.png";
-
+import Swal from "sweetalert2";
 import {
   Box,
   Flex,
@@ -22,7 +22,6 @@ import { useState, useEffect } from "react";
 // import { ChevronDownIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 export default function Navbar() {
-  const frontendUrl = "https://findmydoc.netlify.app";
   const { colorMode, toggleColorMode } = useColorMode();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
@@ -40,10 +39,13 @@ export default function Navbar() {
   }, []);
 
   function Logout() {
-    sessionStorage.clear();
-    setIsLoggedIn(false);
-    window.location.reload();
-    window.location.href = `${frontendUrl}`;
+    Swal.fire("Logout Successful").then(() => {
+      setTimeout(() => {
+        sessionStorage.clear();
+        setIsLoggedIn(false);
+        window.location.href = `/`;
+      }, 1000);
+    });
   }
 
   return (
@@ -108,6 +110,7 @@ export default function Navbar() {
               className={styles.navBtnChild}
               padding={"6px 8px"}
               _hover={{ backgroundColor: "rgb(218, 230, 230)", color: "black" }}
+              style={{display : isLoggedIn ? "block" : "none"}}
             >
               <Link to="/appointment">Appointments</Link>
             </Box>
@@ -132,7 +135,7 @@ export default function Navbar() {
              
             )}
           </Flex>
-          <Link to="/notifications">
+          <Link to="/notifications" style={{display : sessionStorage.getItem("login") ? "block" : "none"}}>
             🔔
           </Link>
 
@@ -170,8 +173,8 @@ export default function Navbar() {
 
                   {/* <Box textAlign={"center"}>john.doe@example.com</Box> */}
                   <br />
-                  <MenuItem>Change Profile Photo</MenuItem>
-                  <MenuItem>
+                  <MenuItem style={{display : isLoggedIn ? "block" : "none"}}>Change Profile Photo</MenuItem>
+                  <MenuItem style={{display : isLoggedIn ? "block" : "none"}}>
                     <Link to="/user/dashboard">Dashboard</Link>
                   </MenuItem>
                   <MenuItem onClick={Logout} style={{display : isLoggedIn ? "block" : "none"}}>Logout</MenuItem>
